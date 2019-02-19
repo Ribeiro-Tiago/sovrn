@@ -1,0 +1,25 @@
+{
+	"name": "svorn",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./lib/app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npm run build:commonjs && npm run build:es",
+		"start": "ts-node src/app.ts"
+	},
+	"author": "Tiago Ribeiro",
+	"devDependencies": {
+		"@types/restify": "^7.2.8",
+		"ts-node": "^8.0.2",
+		"typescript": "^3.3.3"
+	},
+	"files": [
+		"es",
+		"lib"
+	],
+	"types": "./lib/app.d.ts",
+	"dependencies": {
+		"restify": "^7.7.0"
+	}
+}
