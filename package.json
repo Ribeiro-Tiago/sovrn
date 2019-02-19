@@ -11,11 +11,14 @@
 	"author": "Tiago Ribeiro",
 	"types": "./lib/app.d.ts",
 	"dependencies": {
+		"mongodb": "^3.1.13",
 		"restify": "^7.7.0",
 		"restify-router": "^0.5.1"
 	},
 	"devDependencies": {
+		"@types/mongodb": "^3.1.19",
 		"@types/restify": "^7.2.8",
+		"dotenv": "^6.2.0",
 		"ts-node": "^8.0.2",
 		"ts-node-dev": "^1.0.0-pre.32",
 		"typescript": "^3.3.3"
