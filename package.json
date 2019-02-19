@@ -6,20 +6,18 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "npm run build:commonjs && npm run build:es",
-		"start": "ts-node src/app.ts"
+		"start": "ts-node-dev src/app.ts --watch"
 	},
 	"author": "Tiago Ribeiro",
+	"types": "./lib/app.d.ts",
+	"dependencies": {
+		"restify": "^7.7.0",
+		"restify-router": "^0.5.1"
+	},
 	"devDependencies": {
 		"@types/restify": "^7.2.8",
 		"ts-node": "^8.0.2",
+		"ts-node-dev": "^1.0.0-pre.32",
 		"typescript": "^3.3.3"
-	},
-	"files": [
-		"es",
-		"lib"
-	],
-	"types": "./lib/app.d.ts",
-	"dependencies": {
-		"restify": "^7.7.0"
 	}
 }

@@ -1,13 +1,11 @@
-import { createServer, Request, Response, Next } from 'restify';
+import { createServer } from 'restify';
+import romanRoutes from "./routes/roman";
+import arabicRoutes from "./routes/arabic";
 
-function respond(req: Request, res: Response, next: Next) {
-	res.send('hello ' + req.params.name);
-	next();
-}
+const server = createServer();
 
-var server = createServer();
-server.get('/hello/:name', respond);
-server.head('/hello/:name', respond);
+romanRoutes.applyRoutes(server);
+arabicRoutes.applyRoutes(server);
 
 server.listen(8080, function () {
 	console.log('%s listening at %s', server.name, server.url);
