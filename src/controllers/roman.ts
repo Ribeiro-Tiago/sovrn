@@ -4,7 +4,7 @@ import * as model from "../models/Roman";
 export const getNumber = async (req: Request, res: Response) => {
     const { number } = req.params;
 
-    if (isNaN(number)) {
+    if (!number || isNaN(number)) {
         res.send(400);
     }
 
