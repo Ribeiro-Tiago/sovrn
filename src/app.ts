@@ -1,6 +1,6 @@
 import { createServer } from 'restify';
-import romanRoutes from "./routes/roman";
-import arabicRoutes from "./routes/arabic";
+import romanRoutes from "./routes/Roman";
+import arabicRoutes from "./routes/Arabic";
 
 require('dotenv').config();
 

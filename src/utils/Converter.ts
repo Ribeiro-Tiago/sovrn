@@ -1,4 +1,4 @@
-import { addDoc } from "./db";
+import { addDoc } from "./Db";
 
 export const convertAndStore = async (originNum: number, collection: string) => {
     const convertedNum = convert(originNum);
