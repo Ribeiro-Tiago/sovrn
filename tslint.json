@@ -1,0 +1,32 @@
+{
+	"extends": [
+		"tslint:recommended",
+		"tslint-eslint-rules"
+	],
+	"rules": {
+		"arrow-return-shorthand": true,
+		"no-implicit-dependencies": true,
+		"class-name": true,
+		"comment-format": [
+			true,
+			"check-space"
+		],
+		"curly": true,
+		"deprecation": {
+			"severity": "warn"
+		},
+		"indent": [
+			true,
+			"tabs",
+			4
+		],
+		"semicolon": [
+			true,
+			"always"
+		],
+		"triple-equals": [
+			true,
+			"allow-null-check"
+		],
+	}
+}

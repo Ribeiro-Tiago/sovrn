@@ -1,13 +1,23 @@
 {
 	"compilerOptions": {
+		"baseUrl": "./",
 		"lib": [
-			"es6"
+			"es2018"
 		],
 		"alwaysStrict": true,
+		"allowJs": false,
 		"strictNullChecks": true,
-		"noImplicitAny": true
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"pretty": true
 	},
-	"files": [
-		"src/app.ts"
-	]
+	"exclude": [
+		"node_modules",
+		"test",
+		".gitignore",
+		".editorconfig"
+	],
 }
