@@ -3,7 +3,6 @@ import { InsertedDocument } from "src/interfaces";
 
 const connect = async (collection: string) => {
     try {
-
         const con = await MongoClient.connect(`${process.env.DB_SERVER}`, { useNewUrlParser: true });
 
         return {
