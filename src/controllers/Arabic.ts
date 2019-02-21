@@ -1,6 +1,6 @@
 import { Request, Response } from "restify";
 import * as model from "../models/Arabic";
-import RomanNums from "../utils/RomanNums";
+import { asRomanArr } from "../utils/RomanNums";
 
 export const getNumber = async (req: Request, res: Response) => {
     const number = req.params.number.toUpperCase();
@@ -16,5 +16,5 @@ export const getNumber = async (req: Request, res: Response) => {
 };
 
 const isRomanNumber = (number: string) => {
-    return !number.split("").some(letter => !RomanNums.includes(letter));
+    return !number.split("").some(letter => !asRomanArr.includes(letter));
 };

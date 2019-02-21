@@ -1,30 +1,30 @@
-import { MongoClient, Collection } from "mongodb";
+import { MongoClient, InsertOneWriteOpResult } from "mongodb";
 
-import { InsertedDocument } from "../interfaces";
+import { InsertedDocument, ConnectResult, DocumentResult } from "../interfaces";
 
-interface ConnectResult {
-    con: MongoClient;
-    coll: Collection<any>;
-};
 
-const connect = async (collection: string | string[]): Promise<ConnectResult> => {
+const connect = async (collection?: string): Promise<ConnectResult | MongoClient> => {
     try {
         const con = await MongoClient.connect(`${process.env.DB_SERVER}`, { useNewUrlParser: true });
 
+        if (!collection) {
+            return con;
+        }
+
         return {
             con,
-            coll: con.db().collection(collection as string)
+            collection: con.db().collection(collection)
         };
     } catch (err) {
         throw err;
     }
 };
 
-export const findOne = async (collection: string, filter: object) => {
+export const findOne = async (collection_name: string, filter: object): Promise<DocumentResult> => {
     try {
-        const { con, coll } = await connect(collection);
+        const { con, collection } = await connect(collection_name) as ConnectResult;
 
-        const result = coll.findOne(filter, { projection: { _id: 0, originNum: 0 } })
+        const result = collection.findOne(filter, { projection: { _id: 0, originNum: 0 } })
 
         con.close();
 
@@ -34,11 +34,11 @@ export const findOne = async (collection: string, filter: object) => {
     }
 };
 
-export const addDoc = async (collection: string, doc: InsertedDocument) => {
+export const addDoc = async (collection_name: string, doc: InsertedDocument): Promise<InsertOneWriteOpResult> => {
     try {
-        const { con, coll } = await connect(collection);
+        const { con, collection } = await connect(collection_name) as ConnectResult;
 
-        const result = coll.insertOne(doc)
+        const result = collection.insertOne(doc)
 
         con.close();
 
@@ -48,11 +48,11 @@ export const addDoc = async (collection: string, doc: InsertedDocument) => {
     }
 };
 
-export const findAllOfType = async (collection: string) => {
+export const findAllOfType = async (collection_name: string): Promise<Array<DocumentResult>> => {
     try {
-        const { con, coll } = await connect(collection);
+        const { con, collection } = await connect(collection_name) as ConnectResult;
 
-        const result = coll.find({}, { batchSize: 100, projection: { _id: 0 } }).toArray();
+        const result = collection.find({}, { batchSize: 100, projection: { _id: 0 } }).toArray();
 
         con.close();
 
@@ -62,9 +62,9 @@ export const findAllOfType = async (collection: string) => {
     }
 };
 
-export const removeAll = async () => {
+export const removeAll = async (): Promise<void> => {
     try {
-        const con = await MongoClient.connect(`${process.env.DB_SERVER}`, { useNewUrlParser: true });
+        const con = await connect() as MongoClient;
 
         await con.db().dropCollection("romans");
         await con.db().dropCollection("arabics");
