@@ -1,18 +1,15 @@
 import { MongoClient, Collection } from "mongodb";
 
-export interface InsertedDocument {
-    originNum: string | number;
-    convertedNum: string | number;
-};
-
 export interface ConnectResult {
     con: MongoClient;
     collection: Collection<any>;
 };
 
-export interface DocumentResult {
-    insertedValue: string | number;
-    convertedNum: string | number;
+export interface Document {
+    inputValue: NumberType;
+    convertedNum: NumberType;
 };
 
-export type NumberType = "romans" | "arabics";
+export type NumberType = number | string;
+
+export type NumTypeName = "romans" | "arabics";

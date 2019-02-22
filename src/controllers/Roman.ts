@@ -1,6 +1,13 @@
 import { Request, Response } from "restify";
-import * as model from "../models/Roman";
 
+import { toRoman } from "../models/Roman";
+
+/**
+ * returns:
+ * - 400 if the input isn't valid
+ * - 500 if there was an error with the db connection
+ * - 200 with the result if everything went oks
+ */
 export const getNumber = async (req: Request, res: Response) => {
     const { number } = req.params;
 
@@ -8,8 +15,12 @@ export const getNumber = async (req: Request, res: Response) => {
         res.send(400);
     }
 
-    res.send(200, {
-        inputValue: number,
-        convertedNum: await model.toRoman(number)
-    });
+    try {
+        res.send(200, {
+            inputValue: number,
+            convertedNum: await toRoman(number)
+        });
+    } catch (err) {
+        res.send(500);
+    }
 };

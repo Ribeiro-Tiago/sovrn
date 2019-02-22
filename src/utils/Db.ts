@@ -1,11 +1,22 @@
+import { isNullOrUndefined } from "util";
 import { MongoClient, InsertOneWriteOpResult } from "mongodb";
 
-import { InsertedDocument, ConnectResult, DocumentResult } from "../interfaces";
+import { ConnectResult, Document } from "../interfaces";
 
-
+/**
+ * Creates a connection to the database and gets the specified collection object for quering.
+ * @param {string | undefined} collection name of the collection we want to return
+ * @returns {ConnectResult | MongoClient} if the collection argument is specified, we return the connection object (to be able to close the connection at the end) and collection object. If not we just return the connection
+ */
 const connect = async (collection?: string): Promise<ConnectResult | MongoClient> => {
+    const db_server = process.env.DB_SERVER;
+
+    if (isNullOrUndefined(db_server)) {
+        throw new Error("Server uri needs to be specified.")
+    }
+
     try {
-        const con = await MongoClient.connect(`${process.env.DB_SERVER}`, { useNewUrlParser: true });
+        const con = await MongoClient.connect(db_server, { useNewUrlParser: true });
 
         if (!collection) {
             return con;
@@ -20,11 +31,11 @@ const connect = async (collection?: string): Promise<ConnectResult | MongoClient
     }
 };
 
-export const findOne = async (collection_name: string, filter: object): Promise<DocumentResult> => {
+export const findOne = async (collection_name: string, filter: object): Promise<Document> => {
     try {
         const { con, collection } = await connect(collection_name) as ConnectResult;
 
-        const result = collection.findOne(filter, { projection: { _id: 0, originNum: 0 } })
+        const result = collection.findOne(filter, { projection: { _id: 0, inputValue: 0 } })
 
         con.close();
 
@@ -34,7 +45,7 @@ export const findOne = async (collection_name: string, filter: object): Promise<
     }
 };
 
-export const addDoc = async (collection_name: string, doc: InsertedDocument): Promise<InsertOneWriteOpResult> => {
+export const addDoc = async (collection_name: string, doc: Document): Promise<InsertOneWriteOpResult> => {
     try {
         const { con, collection } = await connect(collection_name) as ConnectResult;
 
@@ -48,7 +59,7 @@ export const addDoc = async (collection_name: string, doc: InsertedDocument): Pr
     }
 };
 
-export const findAllOfType = async (collection_name: string): Promise<Array<DocumentResult>> => {
+export const findAllOfType = async (collection_name: string): Promise<Array<Document>> => {
     try {
         const { con, collection } = await connect(collection_name) as ConnectResult;
 

@@ -1,20 +1,20 @@
 import { addDoc } from "./Db";
 import { asObj, asArabicArr, asRomanArr } from "./RomanNums";
-import { NumberType } from "../interfaces";
+import { NumberType, NumTypeName } from "../interfaces";
 
 /**
- * checks if the num exists in the DB. If it does returns it, if not converts, saves to db and returns it 
- * @param {number} originNum - number we want to convert
- * @param {NumberType} type - type we're converting to
- * @returns {string | number} - returns the converted number
+ * Converts the input number to the specified type, saves to db and returns it 
+ * @param {number} inputValue - number we want to convert
+ * @param {NumTypeName} type - type we're converting to
+ * @returns {NumberType} - returns the converted number
  */
-export const convertAndStore = async (originNum: number | string, type: NumberType): Promise<string | number> => {
+export const convertAndStore = async (inputValue: NumberType, type: NumTypeName): Promise<string | number> => {
     const convertedNum =
         type === "romans"
-            ? toRoman(originNum as number)
-            : toArabic(originNum as string);
+            ? toRoman(inputValue as number)
+            : toArabic(inputValue as string);
 
-    const result = await addDoc(type, { originNum, convertedNum });
+    const result = await addDoc(type, { inputValue, convertedNum });
 
     return result.ops[0].convertedNum;
 };
