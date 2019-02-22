@@ -11,7 +11,7 @@ import { toRoman } from "../models/Roman";
 export const getNumber = async (req: Request, res: Response) => {
     const { number } = req.params;
 
-    if (!number || isNaN(number)) {
+    if (!number || isNaN(number) || number <= 0) {
         res.send(400);
     }
 

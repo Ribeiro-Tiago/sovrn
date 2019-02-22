@@ -24,8 +24,12 @@ export const convertAndStore = async (inputValue: NumberType, type: NumTypeName)
  * @param {number} numToConvert - arabic numnber we want to convert to roman
  * @return {string} - numToConvert in roman
  */
-const toRoman = (numToConvert: number): string => {
-    let result: string = "";
+export const toRoman = (numToConvert: number): string => {
+    if (numToConvert <= 0) {
+        throw new Error("Invalid roman number");
+    }
+
+    let result = "";
 
     const romanNums = asRomanArr;
 
@@ -50,7 +54,7 @@ const toRoman = (numToConvert: number): string => {
  * @param {string} numToConvert - roman numnber we want to convert to arabic
  * @return {number} - numToConvert in arabic
  */
-const toArabic = (numToConvert: string): number => {
+export const toArabic = (numToConvert: string): number => {
     let result = 0;
     const arabicNums = asArabicArr;
     const romanNums = asRomanArr;
