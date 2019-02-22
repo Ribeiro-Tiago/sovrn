@@ -14,3 +14,5 @@ export interface DocumentResult {
     insertedValue: string | number;
     convertedNum: string | number;
 };
+
+export type NumberType = "romans" | "arabics";
