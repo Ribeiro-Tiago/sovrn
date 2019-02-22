@@ -1,14 +1,8 @@
-import { isNullOrUndefined } from "util";
+import { getValue } from "../utils/Finder";
 
-import { findOne } from "../utils/Db";
-import { convertAndStore } from "../utils/Converter";
-
-export const toRoman = async (originNum: number) => {
-    const result = await findOne("romans", { originNum });
-
-    if (!isNullOrUndefined(result)) {
-        return result.convertedNum;
-    }
-
-    return convertAndStore(originNum, "romans");
-};
+/**
+ * Looks for the number we want to convert in the db. If we find it, we return it. If not we convert, store on db and return the converted value.
+ * @param {number} inputValue - num we want to convert
+ * @return {Promise<string>} a promise that resovles to the converted number
+ */
+export const toRoman = async (inputValue: number): Promise<string> => getValue(inputValue, "romans") as Promise<string>;
