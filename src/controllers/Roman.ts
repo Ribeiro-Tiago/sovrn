@@ -13,6 +13,7 @@ export const getNumber = async (req: Request, res: Response) => {
 
     if (!number || isNaN(number) || number <= 0) {
         res.send(400);
+        return;
     }
 
     try {

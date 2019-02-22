@@ -14,6 +14,7 @@ export const getNumber = async (req: Request, res: Response) => {
 
     if (!number || !isRomanNumber(number)) {
         res.send(400);
+        return;
     }
 
     try {

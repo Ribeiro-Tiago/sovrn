@@ -14,6 +14,7 @@ export const getAllOfType = async (req: Request, res: Response) => {
 
     if (type !== "arabics" && type !== "romans") {
         res.send(400);
+        return;
     }
 
     try {
